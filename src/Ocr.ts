@@ -19,29 +19,47 @@ export class Ocr
 
     private PngPath : string;
     private worker : Tesseract.Worker;
+    private title : string;
+    private artist : string;
+
+    public isReady : boolean = false;
 
     constructor() {
         this.PngPath = "";
         this.worker = createWorker({
             langPath: path.join(__dirname, '../src/OCR'),
         });
+        this.title = "";
+        this.artist = "";
     }
 
     private croppng(callback : CallableFunction)
     {   
         // @ts-ignore
         jimp.read(this.PngPath).then(img => {
-            img.crop(0, img.bitmap.height - 80, img.bitmap.width, 80).write(this.PngPath, callback);
+            img.crop(225, img.bitmap.height - 50, img.bitmap.width - 800, 50).write(this.PngPath, callback);
         });
     }
 
     private processOcr()
     {
+        let regex : string = "/(.*) - (.*)/";
         (async () => {
             await this.worker.load();
             await this.worker.loadLanguage('eng');
             await this.worker.initialize('eng');
             const { data: { text } } = await this.worker.recognize(this.PngPath);
+
+            try {
+                let parts : any = text.match(regex);
+                this.title = parts[0];
+                this.artist = parts[1];
+                this.isReady = true;
+            }catch(e){
+                this.isReady = false;
+                console.error(e);
+            }
+
             console.log(text);
             await this.worker.terminate();
           })();
@@ -56,11 +74,11 @@ export class Ocr
 
     public getArtiste() : string
     {
-        return "";
+        return this.artist;
     }
 
     public getTitle() : string
     {
-        return "";
+        return this.title;
     }
 }

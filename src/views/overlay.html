@@ -8,7 +8,8 @@
     const ipc = electron.ipcRenderer;
     const desktopCapturer = electron.desktopCapturer;
 
-    setInterval(() => {
+    function processOcr()
+    {
       desktopCapturer.getSources({ types: ['window'], thumbnailSize : { width: 1200, height: 1200 } })
         .then( sources => {
             for(let source of sources){
@@ -19,7 +20,10 @@
               }
             }
         })
-    }, 10000);
+    }
+
+    processOcr();
+    setInterval(processOcr, 10000);
 
   </script>
 </body>

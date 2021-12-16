@@ -39,6 +39,7 @@ function createWindow () {
   
   window.webContents.once('dom-ready', () => {
     OcrInstance = new Ocr();
+    initRichPresence();
   })
 
   ipc.on('process-ocr', (e, png) => {
@@ -46,6 +47,14 @@ function createWindow () {
     OcrInstance.readPng(TMP_PATH);
   });
   
+}
+
+function initRichPresence()
+{
+  if (OcrInstance.isReady){
+    console.log(OcrInstance.getTitle);
+    console.log(OcrInstance.getArtiste);
+  }
 }
 
 function exitOverlay(){
