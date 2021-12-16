@@ -1,0 +1,85 @@
+{
+  "name": "deezer-discord-ocr",
+  "version": "0.0.1",
+  "author": {
+    "name": "Strato"
+  },
+  "description": "Discord rich presence deezer pseudo integration",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BThiebaut/deezer-discord-ocr.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "deezer",
+    "ocr",
+    "discord"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "tsc && electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "files": [
+    "dist/index.d.ts",
+    "dist/index.js",
+    "dist/index.js.map"
+  ],
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.60",
+    "@electron-forge/maker-deb": "^6.0.0-beta.60",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.60",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.60",
+    "@electron-forge/maker-zip": "^6.0.0-beta.60",
+    "@types/node": "12.x.x",
+    "@types/throttle-debounce": "2.x.x",
+    "electron": "10.x.x",
+    "prebuildify": "4.x.x",
+    "ts-node": "9.x.x",
+    "typescript": "4.x.x"
+  },
+  "dependencies": {
+    "electron-overlay-window": "^2.0.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "jimp": "^0.16.1",
+    "node-gyp-build": "4.x.x",
+    "tesseract.js": "^2.1.5",
+    "throttle-debounce": "3.x.x"
+  },
+  "gypfile": true,
+  "engines": {
+    "node": ">= 12"
+  },
+  "peerDependencies": {
+    "electron": ">= 10"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "phasmo_ev_overlay"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
